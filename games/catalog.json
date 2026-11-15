@@ -1,1 +1,577 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050912">
+<meta name="description" content="NOVA SPIRE STUDIOS — Building Tomorrow's Technology.">
+<title>NOVA SPIRE STUDIOS | Building Tomorrow's Technology</title>
+
+<style>
+:root {
+  --bg:#050912;
+  --panel:#0b1422;
+  --blue:#168cff;
+  --cyan:#4de5ff;
+  --silver:#cbd5e1;
+  --text:#f5f8ff;
+  --muted:#94a3b8;
+  --line:rgba(150,190,255,.17);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:Inter,system-ui,Arial,sans-serif;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+#universe{
+  position:fixed;inset:0;width:100%;height:100%;
+  z-index:-2;pointer-events:none;
+}
+#cursor{
+  position:fixed;width:9px;height:9px;border-radius:50%;
+  background:var(--cyan);pointer-events:none;z-index:1000;
+  box-shadow:0 0 20px var(--cyan);
+  transform:translate(-50%,-50%);
+}
+@media(pointer:coarse){#cursor{display:none}}
+
+header{
+  position:fixed;z-index:100;top:0;width:100%;
+  padding:17px 6%;
+  display:flex;align-items:center;justify-content:space-between;
+  background:#050912c9;backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);
+}
+.identity{display:flex;align-items:center;gap:12px}
+.logo{
+  width:43px;height:43px;border:1px solid var(--cyan);
+  border-radius:12px;display:grid;place-items:center;
+  color:var(--silver);font-weight:900;font-size:19px;
+  box-shadow:0 0 22px #168cff33;
+}
+.identity strong{font-size:12px;letter-spacing:2px}
+.identity small{display:block;font-size:9px;letter-spacing:3px;color:var(--muted);margin-top:4px}
+nav{display:flex;align-items:center;gap:25px}
+nav a{font-size:11px;letter-spacing:1px;color:var(--muted);transition:.3s}
+nav a:hover{color:var(--cyan)}
+.menu{
+  display:none;color:white;background:none;
+  border:1px solid var(--line);padding:8px 12px;border-radius:7px;
+}
+.eyebrow{
+  color:var(--cyan);font-size:10px;
+  letter-spacing:4px;text-transform:uppercase;
+  margin-bottom:20px;
+}
+section{padding:110px 8%;position:relative}
+.hero{
+  min-height:100svh;padding:130px 8% 70px;
+  display:flex;align-items:center;overflow:hidden;
+}
+.hero-content{max-width:780px;position:relative;z-index:2}
+.hero h1{
+  font-size:clamp(47px,8vw,105px);
+  line-height:.96;letter-spacing:-5px;
+}
+.gradient{
+  background:linear-gradient(100deg,#fff,#aeb9d0,#168cff,#4de5ff);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero p{
+  max-width:590px;color:var(--muted);
+  line-height:1.9;margin:28px 0 32px;font-size:15px;
+}
+.actions{display:flex;gap:13px;flex-wrap:wrap}
+.btn{
+  padding:14px 21px;border-radius:5px;
+  border:1px solid var(--line);font-size:10px;
+  font-weight:800;letter-spacing:1px;
+  display:inline-flex;align-items:center;gap:10px;
+  transition:.3s;cursor:pointer;
+}
+.btn.primary{
+  background:linear-gradient(110deg,#168cff,#4de5ff);
+  color:#03101d;border:0;
+}
+.btn:hover{transform:translateY(-4px);box-shadow:0 10px 35px #168cff33}
+.hero-hint{
+  margin-top:45px;color:#71849e;
+  font-size:9px;letter-spacing:2px;
+}
+#hero3d{
+  position:absolute;right:0;top:0;width:62%;
+  height:100%;z-index:1;cursor:grab;
+}
+#hero3d:active{cursor:grabbing}
+.hero:after{
+  content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(90deg,var(--bg) 20%,transparent 85%);
+  pointer-events:none;
+}
+.section-title{max-width:750px;margin-bottom:45px}
+.section-title h2{font-size:clamp(32px,5vw,57px);letter-spacing:-2px}
+.section-title p{color:var(--muted);line-height:1.9;margin-top:17px;max-width:650px}
+.divisions,.products,.features{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:17px;
+}
+.card{
+  background:linear-gradient(145deg,#101d30,#080e19);
+  border:1px solid var(--line);border-radius:13px;
+  padding:27px;position:relative;overflow:hidden;
+  transition:.35s;
+}
+.card:hover{transform:translateY(-7px);border-color:#168cff99}
+.symbol{font-size:28px;color:var(--cyan);margin-bottom:22px}
+.card h3{font-size:22px;margin-bottom:12px}
+.card p{font-size:13px;line-height:1.9;color:var(--muted)}
+.card small{
+  display:inline-block;margin-top:23px;
+  font-size:9px;letter-spacing:2px;color:var(--cyan);
+}
+.products{grid-template-columns:repeat(3,1fr)}
+.product{min-height:205px}
+.product h3{font-size:19px}
+.product a{display:inline-block;margin-top:17px;font-size:10px;color:var(--cyan)}
+.highlight{
+  background:radial-gradient(ellipse at center,#0e3760 0%,#081322 60%,#050912);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.game-shell{
+  border:1px solid var(--line);border-radius:15px;
+  padding:30px;background:#07111f;
+}
+.game-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:16px;margin-top:28px;
+}
+.game{
+  background:#0b1828;border:1px solid var(--line);
+  border-radius:10px;overflow:hidden;
+}
+.game img{width:100%;height:145px;object-fit:cover}
+.game-body{padding:16px}
+.game p{font-size:12px;color:var(--muted);line-height:1.7;margin-top:8px}
+.empty{
+  grid-column:1/-1;padding:35px;text-align:center;
+  border:1px dashed var(--line);border-radius:10px;color:var(--muted);
+}
+.timeline{display:grid;gap:15px}
+.timeline article{
+  display:grid;grid-template-columns:65px 1fr;
+  gap:20px;padding:20px;border-bottom:1px solid var(--line);
+}
+.timeline b{color:var(--cyan);font-size:12px}
+.timeline p{font-size:13px;color:var(--muted);line-height:1.8;margin-top:7px}
+.cta{
+  padding:90px 8%;text-align:center;
+  background:linear-gradient(120deg,#071b32,#11172c,#071321);
+  border-top:1px solid var(--line);
+}
+.cta h2{font-size:clamp(32px,6vw,66px);letter-spacing:-3px}
+.cta p{max-width:550px;margin:20px auto 28px;color:var(--muted);line-height:1.9}
+footer{padding:45px 8% 25px;background:#03060c}
+.footer-row{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}
+.footer-links{display:flex;gap:18px;flex-wrap:wrap}
+.footer-links a,footer p{font-size:11px;color:var(--muted);line-height:2}
+.copyright{border-top:1px solid var(--line);margin-top:30px;padding-top:20px;color:#718096;font-size:10px}
+.reveal{opacity:0;transform:translateY(22px);transition:.8s}
+.reveal.visible{opacity:1;transform:none}
+#progress{
+  position:fixed;top:0;left:0;width:0;height:2px;
+  background:linear-gradient(90deg,var(--blue),var(--cyan));z-index:200;
+}
+@media(max-width:850px){
+  header{padding:14px 5%}
+  .menu{display:block}
+  nav{
+    display:none;position:absolute;top:70px;left:0;
+    width:100%;padding:25px;background:#07111f;
+    flex-direction:column;border-bottom:1px solid var(--line);
+  }
+  nav.open{display:flex}
+  #hero3d{width:100%;opacity:.55}
+  .hero:after{background:linear-gradient(90deg,#050912dd,#05091277)}
+  .divisions,.products,.features{grid-template-columns:1fr}
+  section{padding:85px 6%}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{scroll-behavior:auto!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+
+<body>
+<div id="progress"></div>
+<canvas id="universe"></canvas>
+<div id="cursor"></div>
+
+<header>
+  <a class="identity" href="#home">
+    <div class="logo">NS</div>
+    <div>
+      <strong>NOVA SPIRE</strong>
+      <small>STUDIOS</small>
+    </div>
+  </a>
+  <nav id="nav">
+    <a href="#home">HOME</a>
+    <a href="#divisions">DIVISIONS</a>
+    <a href="#products">ECOSYSTEM</a>
+    <a href="#games">GAMES</a>
+    <a href="#vision">VISION</a>
+  </nav>
+  <button class="menu" id="menu">☰</button>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div id="hero3d" aria-label="Interactive three-dimensional NOVA SPIRE centerpiece"></div>
+  <div class="hero-content">
+    <div class="eyebrow">An independent technology ecosystem</div>
+    <h1>BUILDING<br><span class="gradient">TOMORROW'S</span><br>TECHNOLOGY.</h1>
+    <p>
+      We create technology, develop intelligent software,
+      build interactive worlds and explore the boundaries
+      of what digital experiences can become.
+    </p>
+    <div class="actions">
+      <a href="#products" class="btn primary">EXPLORE OUR ECOSYSTEM ↗</a>
+      <a href="#vision" class="btn">OUR VISION</a>
+    </div>
+    <div class="hero-hint">SCROLL TO EXPLORE · DRAG THE 3D ENVIRONMENT</div>
+  </div>
+</section>
+
+<section id="divisions">
+  <div class="section-title reveal">
+    <div class="eyebrow">Our structure</div>
+    <h2>Three divisions. One vision.</h2>
+    <p>NOVA SPIRE STUDIOS brings together three interconnected areas of technology and creativity.</p>
+  </div>
+  <div class="divisions">
+    <article class="card reveal">
+      <div class="symbol">✧</div>
+      <h3>NOVA</h3>
+      <p>Artificial intelligence, programming technologies, game development and the tools that empower creators.</p>
+      <small>AI & GAME DEVELOPMENT</small>
+    </article>
+    <article class="card reveal">
+      <div class="symbol">⌘</div>
+      <h3>SPIRE</h3>
+      <p>Software solutions, intelligent systems, automation and connected digital infrastructure.</p>
+      <small>SOFTWARE & AUTOMATION</small>
+    </article>
+    <article class="card reveal">
+      <div class="symbol">◇</div>
+      <h3>STUDIOS</h3>
+      <p>Websites, applications, digital products and creative experiences across devices.</p>
+      <small>WEBSITES & APPLICATIONS</small>
+    </article>
+  </div>
+</section>
+
+<section id="products">
+  <div class="section-title reveal">
+    <div class="eyebrow">Our technology ecosystem</div>
+    <h2>Ideas become technology.</h2>
+    <p>Explore the products and initiatives being developed across our company.</p>
+  </div>
+  <div class="products">
+    <article class="card product reveal">
+      <div class="symbol">⌘</div>
+      <h3>NOVA Language</h3>
+      <p>An original programming language designed for powerful development, safety, performance and engine integration.</p>
+      <small>PROGRAMMING LANGUAGE</small>
+    </article>
+    <article class="card product reveal">
+      <div class="symbol">⚙</div>
+      <h3>NOVA Compiler</h3>
+      <p>The compiler and interpreter technologies supporting the NOVA language ecosystem.</p>
+      <small>LANGUAGE INFRASTRUCTURE</small>
+    </article>
+    <article class="card product reveal">
+      <div class="symbol">▣</div>
+      <h3>NOVA Editor</h3>
+      <p>A development environment initiative with an integrated AI assistant.</p>
+      <small>DEVELOPER TOOLS</small>
+    </article>
+    <article class="card product reveal">
+      <div class="symbol">✧</div>
+      <h3>NGE</h3>
+      <p>NOVA Game Engine — a cross-device game development ecosystem for immersive interactive worlds.</p>
+      <small>GAME TECHNOLOGY</small>
+    </article>
+    <article class="card product reveal">
+      <div class="symbol">K</div>
+      <h3>KODE</h3>
+      <p>An official NOVA SPIRE STUDIOS application.</p>
+      <small>APPLICATION</small>
+    </article>
+    <article class="card product reveal">
+      <div class="symbol">NS²</div>
+      <h3>NS² Code</h3>
+      <p>A programming technology initiative within the NOVA SPIRE STUDIOS ecosystem.</p>
+      <small>PROGRAMMING TECHNOLOGY</small>
+    </article>
+    <article class="card product reveal">
+      <div class="symbol">✉</div>
+      <h3>NOVA MAIL</h3>
+      <p>An email product initiative within the wider NOVA ecosystem.</p>
+      <small>COMMUNICATION</small>
+    </article>
+    <article class="card product reveal">
+      <div class="symbol">⌬</div>
+      <h3>Software & Automation</h3>
+      <p>Digital solutions, workflow tools and intelligent automation initiatives.</p>
+      <small>SOFTWARE SOLUTIONS</small>
+    </article>
+    <article class="card product reveal">
+      <div class="symbol">◈</div>
+      <h3>5 PARK IDEAS</h3>
+      <p>A website project in the NOVA SPIRE STUDIOS portfolio.</p>
+      <small>WEB PROJECT</small>
+    </article>
+  </div>
+</section>
+
+<section class="highlight" id="games">
+  <div class="section-title reveal">
+    <div class="eyebrow">NOVA Game Engine</div>
+    <h2>Discover worlds created with NGE.</h2>
+    <p>The official game discovery area for games published through the NOVA Game Engine ecosystem.</p>
+  </div>
+  <div class="game-shell reveal">
+    <h3>NGE GAME LIBRARY</h3>
+    <p style="color:var(--muted);margin-top:10px;font-size:13px">
+      Published games will be showcased here.
+    </p>
+    <div class="game-grid" id="gameGrid">
+      <div class="empty">Loading the NGE catalogue...</div>
+    </div>
+  </div>
+</section>
+
+<section id="vision">
+  <div class="section-title reveal">
+    <div class="eyebrow">Our roadmap</div>
+    <h2>Building an interconnected future.</h2>
+    <p>Our long-term direction brings together programming, AI, game technology, software, automation and digital experiences.</p>
+  </div>
+  <div class="timeline reveal">
+    <article>
+      <b>01</b><div><h3>Core technologies</h3><p>Develop NOVA language foundations, development tools and NGE infrastructure.</p></div>
+    </article>
+    <article>
+      <b>02</b><div><h3>Product ecosystem</h3><p>Advance applications, software solutions, communication products and automation.</p></div>
+    </article>
+    <article>
+      <b>03</b><div><h3>Creative expansion</h3><p>Build original games, interactive experiences, websites and applications.</p></div>
+    </article>
+    <article>
+      <b>04</b><div><h3>Connected platforms</h3><p>Expand the ecosystem across PCs, laptops, tablets, phones, TVs and VR devices.</p></div>
+    </article>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="eyebrow">NOVA SPIRE STUDIOS</div>
+  <h2>THE FUTURE IS <span class="gradient">INNOVATION.</span></h2>
+  <p>Building Tomorrow's Technology. Creating possibilities beyond today's boundaries.</p>
+  <a href="#home" class="btn primary">BACK TO THE BEGINNING ↑</a>
+</section>
+</main>
+
+<footer>
+  <div class="footer-row">
+    <div class="identity">
+      <div class="logo">NS</div>
+      <div><strong>NOVA SPIRE</strong><small>STUDIOS</small></div>
+    </div>
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#divisions">Divisions</a>
+      <a href="#products">Products</a>
+      <a href="#games">Games</a>
+      <a href="#vision">Vision</a>
+    </div>
+  </div>
+  <div class="copyright">
+    © <span id="year"></span> NOVA SPIRE STUDIOS. All rights reserved.
+    <br>Building Tomorrow's Technology.
+  </div>
+</footer>
+
+<script>
+document.getElementById("year").textContent=new Date().getFullYear();
+
+const menu=document.getElementById("menu");
+const nav=document.getElementById("nav");
+menu.addEventListener("click",()=>{
+  nav.classList.toggle("open");
+  menu.textContent=nav.classList.contains("open")?"×":"☰";
+});
+nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{
+  nav.classList.remove("open");menu.textContent="☰";
+}));
+
+// Scroll progress and section reveals
+window.addEventListener("scroll",()=>{
+  const max=document.documentElement.scrollHeight-innerHeight;
+  document.getElementById("progress").style.width=
+    (max>0?scrollY/max*100:0)+"%";
+},{passive:true});
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add("visible");
+      observer.unobserve(e.target);
+    }
+  });
+},{threshold:.12});
+document.querySelectorAll(".reveal").forEach(e=>observer.observe(e));
+
+// Desktop custom cursor
+const cursor=document.getElementById("cursor");
+if(matchMedia("(pointer:fine)").matches){
+  window.addEventListener("pointermove",e=>{
+    cursor.style.left=e.clientX+"px";
+    cursor.style.top=e.clientY+"px";
+  },{passive:true});
+}
+
+// NGE catalogue manifest.
+// A future NGE publishing service can update this file automatically.
+async function loadGames(){
+  const grid=document.getElementById("gameGrid");
+  try{
+    const response=await fetch("./games/catalog.json",{cache:"no-store"});
+    if(!response.ok)throw new Error("Catalogue not published");
+    const data=await response.json();
+    const games=Array.isArray(data)?data:data.games;
+    if(!Array.isArray(games)||!games.length)throw new Error("No games published");
+    grid.replaceChildren();
+
+    games.forEach(game=>{
+      const card=document.createElement("article");
+      card.className="game";
+      if(game.image){
+        const img=document.createElement("img");
+        img.src=game.image;img.alt=game.name||"NGE game";
+        img.loading="lazy";card.append(img);
+      }
+      const body=document.createElement("div");
+      body.className="game-body";
+      const title=document.createElement("h3");
+      title.textContent=game.name||"Untitled game";
+      const description=document.createElement("p");
+      description.textContent=game.description||"Created with NGE.";
+      body.append(title,description);
+      card.append(body);
+      if(game.url){
+        const link=document.createElement("a");
+        link.href=game.url;
+        link.target="_blank";
+        link.rel="noopener noreferrer";
+        link.append(card);grid.append(link);
+      }else grid.append(card);
+    });
+  }catch(error){
+    grid.innerHTML="";
+    const empty=document.createElement("div");
+    empty.className="empty";
+    empty.innerHTML="<h3>The NGE universe is expanding.</h3><p>Games will appear here when they are published to the official catalogue.</p>";
+    grid.append(empty);
+  }
+}
+loadGames();
+
+// Three.js interactive centerpiece
+(async function(){
+  const host=document.getElementById("hero3d");
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  try{
+    const THREE=await import(
+      "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"
+    );
+    const scene=new THREE.Scene();
+    const camera=new THREE.PerspectiveCamera(45,1,.1,100);
+    camera.position.set(0,0,9);
+
+    const renderer=new THREE.WebGLRenderer({
+      alpha:true,antialias:true,powerPreference:"low-power"
+    });
+    renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
+    renderer.setSize(host.clientWidth,host.clientHeight);
+    renderer.setClearColor(0x000000,0);
+    host.appendChild(renderer.domElement);
+
+    const core=new THREE.Group();
+    scene.add(core);
+
+    const orb=new THREE.Mesh(
+      new THREE.IcosahedronGeometry(1.55,2),
+      new THREE.MeshStandardMaterial({
+        color:0x819dff,metalness:.85,roughness:.2,
+        emissive:0x102c66,emissiveIntensity:.6,
+        wireframe:false
+      })
+    );
+    core.add(orb);
+
+    const wire=new THREE.Mesh(
+      new THREE.IcosahedronGeometry(1.62,2),
+      new THREE.MeshBasicMaterial({
+        color:0x4de5ff,wireframe:true,transparent:true,opacity:.28
+      })
+    );
+    core.add(wire);
+
+    const ringMaterial=new THREE.MeshStandardMaterial({
+      color:0x8dbbff,metalness:.9,roughness:.2,
+      emissive:0x1264a8,emissiveIntensity:.5
+    });
+    const ring=new THREE.Mesh(
+      new THREE.TorusGeometry(2.2,.018,12,180),ringMaterial
+    );
+    ring.rotation.x=1.1;ring.rotation.y=.3;
+    core.add(ring);
+
+    const ring2=ring.clone();
+    ring2.scale.set(.85,.85,.85);
+    ring2.rotation.x=.5;ring2.rotation.y=-.7;
+    core.add(ring2);
+
+    const spire=new THREE.Mesh(
+      new THREE.ConeGeometry(.42,1.7,6),
+      new THREE.MeshStandardMaterial({
+        color:0xcbd5e1,metalness:1,roughness:.18,
+        emissive:0x163d78,emissiveIntensity:.4
+      })
+    );
+    spire.position.y=2.05;
+    core.add(spire);
+
+    scene.add(new THREE.AmbientLight(0x8299cc,2));
+    const light=new THREE.PointLight(0x4de5ff,35,15);
+    light.position.set(3,3,4);scene.add(light);
+    const blueLight=new THREE.PointLight(0x376aff,28,15);
+    blueLight.position.set(-4,-2,3);scene.add(blueLight);
+
+    let targetX=0,targetY=0,dragging=false,lastX=0,lastY=0;
+    host.addEventListener("pointerdown",e=>{
+      dragging=true;lastX=e.clientX;lastY=e.clientY;
+      host.setPointerCapture(e.pointerId);
+    });
+    host.addEventListener("pointerup",()=>dragging=false);
+    host.addEventListener("pointercancel",()=>dragging=false);
+    host.addEventListener("pointermove",e=>{
+      if(dragging){
+        targetY+=(e.clientX-lastX)*.008;
+      
